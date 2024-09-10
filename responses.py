@@ -1,8 +1,10 @@
 import requests
-from constant import games
+from constant import games_dict
 
+def fetch_offers(game_name, page_num=1, count=0, offers_list=None):
 
-def response(game_id : int, page_num = 1, count = 0):
+    if offers_list is None:
+        offers_list = []
 
     session = requests.Session()
     headers = {
@@ -14,43 +16,65 @@ def response(game_id : int, page_num = 1, count = 0):
     params = {
         'pageSize': '50',
         'pageIndex': page_num,
-        'itemTreeId': f'{game_id}-1-0',
+        'itemTreeId': f'{games_dict[game_name]["game_id"]}-0',
         'offerType': 'Account',
+        'lowestPrice': 5,
+        'highestPrice': 100,
         'deliveryTime': 'Instant',
         'offerSortingCriterion': 'Price',
         'isAscending': 'false',
     }
 
     response = session.get('https://www.eldorado.gg/api/flexibleOffers/', params=params, headers=headers)
+    
     if response.status_code == 200:
         data = response.json()
-        # for page in range(2,len(data['totalPages']) + 1):
-        if page_num <= len(data['totalPages']):
-            for offer in data['results']:
-                if float(offer['userOrderInfo']['feedbackScore']) > 99:
-                    try:
-                        title = offer['offer']['offerTitle']
-                    except(TypeError,KeyError):
-                        title = "N/A"
-                    try:
-                        price = offer['offer']['pricePerUnitInUSD']['amount']
-                    except(TypeError,KeyError):
-                        price = "N/A"
-                    game_name['extract_info'](offer)
-                    
-                    print(len(data['results']))
-                    print(data['totalPages'])
-                    count += 1
-            if count <= 100:
-                response(game_id, page_num + 1, count)
-            else:
-                print("100 offers are scraped")
+        total_pages = int(data['totalPages'])
 
+        if page_num <= total_pages and count < 100:
+            for offer in data['results']:
+                feedback_score = float(offer['userOrderInfo']['feedbackScore'])
+                if feedback_score > 99:
+                    title = offer['offer'].get('offerTitle', 'N/A')
+                    try:
+                        price = int(offer['offer']['pricePerUnitInUSD']['amount'])
+                    except(KeyError,TypeError):
+                        price = "N/A"
+
+                    server, rank, device = games_dict[game_name]['extract_info'](offer)
+
+                    table = {
+                        'Game': game_name,
+                        'Field-1': server,
+                        'Field-2': rank,
+                        'Field-3': device,
+                        'Title': title,
+                        'DES': title,
+                        'Price': price,
+                        'Delete': False,
+                        'Done': False
+                    }
+
+                    offers_list.append(table)
+                    count += 1
+
+                if count >= 100:
+                    print("100 offers are scraped")
+                    return offers_list
+
+            return fetch_offers(game_name, page_num + 1, count, offers_list)
         else:
-            print("All Pages Done")
+            print("All pages processed or 100 offers scraped")
+
     else:
-            print("Get Response Error")
+        print(f"Error fetching data. Status code: {response.status_code}")
+
+    return offers_list
 
 
 if __name__ == "__main__":
-    response(16,1)
+    for game_name in games_dict:
+        offers = fetch_offers(game_name)
+        print(f"Scraped offers for {game_name}:")
+        print(offers)
+        break  # Remove this if you want to scrape for all games
