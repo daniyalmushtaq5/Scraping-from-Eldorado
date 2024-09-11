@@ -1,5 +1,5 @@
 import requests
-from constant import games_dict
+from constant import *
 
 def fetch_offers(game_name, page_num=1, count=0, offers_list=None):
 
@@ -18,8 +18,8 @@ def fetch_offers(game_name, page_num=1, count=0, offers_list=None):
         'pageIndex': page_num,
         'itemTreeId': f'{games_dict[game_name]["game_id"]}-0',
         'offerType': 'Account',
-        'lowestPrice': 5,
-        'highestPrice': 100,
+        'lowestPrice': MIN_PRICE,
+        'highestPrice': MAX_PRICE,
         'deliveryTime': 'Instant',
         'offerSortingCriterion': 'Price',
         'isAscending': 'false',

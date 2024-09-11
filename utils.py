@@ -1,4 +1,4 @@
-from constant import COD_server_dict, LOL_server_dict
+from game_data import COD_server_dict, LOL_server_dict
 
 def get_info_for_valorant(offer):
     try:
@@ -89,5 +89,4 @@ def get_info_for_overwatch(offer):
     device = ""
     return server, rank, device
 
-if __name__ == "__main__":
-    pass
+

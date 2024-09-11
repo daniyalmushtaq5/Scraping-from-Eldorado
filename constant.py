@@ -1,4 +1,18 @@
-from  utils import *
+from utils import (
+    get_info_for_valorant,
+    get_info_for_fortnite,
+    get_info_for_gta,
+    get_info_for_rainbow_six_siege,
+    get_info_for_call_of_duty,
+    get_info_for_os,
+    get_info_for_LOL,
+    get_info_for_roblox,
+    get_info_for_coc,
+    get_info_for_overwatch
+)
+
+MIN_PRICE = 5
+MAX_PRICE = 100
 
 games_dict = {
     "Valorant" : {
@@ -42,33 +56,3 @@ games_dict = {
     "extract_info" : get_info_for_overwatch,
     },
 }
-
-COD_server_dict = {
-    "Cold War" : "Black Ops Cold War",
-    "Modern Warfare I" : "Modern Warfare",
-    "Modern Warfare II" : "Modern Warfare 2",
-    "Modern Warfare III" : "Modern Warfare 3",
-    "Other" : "Others",
-    "Vanguard" : "Vanguard",
-    "Warzone 3" : ""
-}
-
-LOL_server_dict = {
-    "Brazil" : "BR",
-    "Europe Nordic & East" : "EUNE",
-    "PBE" : "PBE",
-    "Singapore" : "SG",
-    "Philippines" : "PH",
-    "Vietnam" : "VN",
-    "Thailand" : "TH",
-    "Taiwan" : "TW",
-    "Middle East" : "ME",
-    "Europe West" : "EUW",
-    "Latin America North": "LAN",
-    "Latin America South": "LAS",
-    "Oceania": "OCE",
-    "Russia": "RU",
-    "Turkey": "TR",
-    "Japan": "JP"
-}
-
