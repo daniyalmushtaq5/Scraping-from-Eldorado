@@ -42,7 +42,7 @@ def get_info_for_rainbow_six_siege(offer):
 
 def get_info_for_call_of_duty(offer):
     try:
-        server = COD_server_dict[offer['offer']['offerAttributeIdValues'][0]['value']]
+        server = COD_server_dict[offer['offer']['offerAttributeIdValues'][0]['value']] if offer['offer']['offerAttributeIdValues'][0]['value'] != "Warzone 3" else "N/A"
     except(TypeError,KeyError):
         server = "N/A"
     rank = "Rank Ready"
