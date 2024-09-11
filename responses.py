@@ -31,7 +31,7 @@ def fetch_offers(game_name, page_num=1, count=0, offers_list=None):
         data = response.json()
         total_pages = int(data['totalPages'])
 
-        if page_num <= total_pages and count < 100:
+        if page_num <= total_pages and count < ITEMS_PER_GAME:
             for offer in data['results']:
                 feedback_score = float(offer['userOrderInfo']['feedbackScore'])
                 if feedback_score > 99:
@@ -58,23 +58,15 @@ def fetch_offers(game_name, page_num=1, count=0, offers_list=None):
                     offers_list.append(table)
                     count += 1
 
-                if count >= 100:
-                    print("100 offers are scraped")
+                if count >= ITEMS_PER_GAME:
+                    print(f"{ITEMS_PER_GAME} offers are scraped")
                     return offers_list
 
             return fetch_offers(game_name, page_num + 1, count, offers_list)
         else:
-            print("All pages processed or 100 offers scraped")
+            print(f"All pages processed or {ITEMS_PER_GAME} offers scraped")
 
     else:
         print(f"Error fetching data. Status code: {response.status_code}")
 
     return offers_list
-
-
-if __name__ == "__main__":
-    for game_name in games_dict:
-        offers = fetch_offers(game_name)
-        print(f"Scraped offers for {game_name}:")
-        print(offers)
-        break  # Remove this if you want to scrape for all games
