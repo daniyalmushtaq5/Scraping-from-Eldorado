@@ -13,6 +13,7 @@ from utils import (
 
 MIN_PRICE = 5
 MAX_PRICE = 100
+ITEMS_PER_GAME = 100
 
 games_dict = {
     "Valorant" : {
