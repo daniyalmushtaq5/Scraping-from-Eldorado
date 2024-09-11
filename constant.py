@@ -19,15 +19,15 @@ games_dict = {
         "game_id" : '32-1',
         "extract_info" : get_info_for_valorant,
     },
-    "Fortnite" : {
+    "FN" : {
         "game_id" : '16-1',
         "extract_info" : get_info_for_fortnite,
     },
-    "GTA 5" : {
+    "GTA 5 Online" : {
     "game_id" : '25-1',
     "extract_info" : get_info_for_gta,
     },
-    "Rainbow Six Siege" : {
+    "Tom Clancys Rainbow Six Siege" : {
     "game_id" : '48-1',
     "extract_info" : get_info_for_rainbow_six_siege,
     },
@@ -43,11 +43,11 @@ games_dict = {
     "game_id" : '17-1',
     "extract_info" : get_info_for_LOL,
     },
-    "Roblox" : {
+    "RBL" : {
     "game_id" : '70-1',
     "extract_info" : get_info_for_roblox,
     },
-    "COC" : {
+    "Clash Of Clans (Global)" : {
     "game_id" : '18-1',
     "extract_info" : get_info_for_coc,
     },
