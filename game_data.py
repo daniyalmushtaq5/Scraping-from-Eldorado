@@ -5,7 +5,6 @@ COD_server_dict = {
     "Modern Warfare III" : "Modern Warfare 3",
     "Other" : "Others",
     "Vanguard" : "Vanguard",
-    "Warzone 3" : ""
 }
 
 LOL_server_dict = {
