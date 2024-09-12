@@ -40,6 +40,10 @@ def fetch_offers(game_name, page_num=1, count=0, offers_list=None):
                         price = int(offer['offer']['pricePerUnitInUSD']['amount'])
                     except(KeyError,TypeError):
                         price = "N/A"
+                    try:
+                        game_link = f'https://www.eldorado.gg/{offer['offer']['gameSeoAlias']}/oa/{offer['offer']['id']}'
+                    except(KeyError,TypeError):
+                        game_link = "N/A"
 
                     server, rank, device = games_dict[game_name]['extract_info'](offer)
 
@@ -51,6 +55,7 @@ def fetch_offers(game_name, page_num=1, count=0, offers_list=None):
                         'Title': title,
                         'DES': title,
                         'Price': price,
+                        'Game Link' : game_link,
                         'Delete': False,
                         'Done': False
                     }
