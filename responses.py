@@ -86,5 +86,3 @@ def fetch_offers(game_name, page_num=1, count=0, offers_list=None, search_count=
 
     return offers_list
 
-if __name__ == "__main__":
-    print(fetch_offers('Valorant'))
