@@ -1,6 +1,6 @@
 from game_data import COD_server_dict, LOL_server_dict
 
-def get_info_for_valorant(offer):
+def get_info_for_valorant(offer,search_query):
     try:
         server = offer['offer']['tradeEnvironmentValues'][0]['value'] if offer['offer']['tradeEnvironmentValues'][0]['value'] != "EU/TR/MENA/CIS" else "EU"
     except(KeyError,TypeError):
@@ -16,13 +16,13 @@ def get_info_for_valorant(offer):
     return server, rank, device
 
 
-def get_info_for_fortnite(offer):
+def get_info_for_fortnite(offer,search_query):
     server = ""
-    rank = "Rank Ready"
+    rank = search_query
     device = ""
     return server, rank, device
 
-def get_info_for_gta(offer):
+def get_info_for_gta(offer,search_query):
     server = ""
     rank = ""
     try:
@@ -31,21 +31,21 @@ def get_info_for_gta(offer):
         device = "N/A"
     return server, rank, device
 
-def get_info_for_rainbow_six_siege(offer):
+def get_info_for_rainbow_six_siege(offer,search_query):
     server = ""
-    rank = "Unranked"
+    rank = search_query
     try:
         device = offer['offer']['tradeEnvironmentValues'][0]['value']  if offer['offer']['tradeEnvironmentValues'][0]['value'] != "PlayStation" else "PSN"
     except(KeyError,TypeError):
         device = "N/A"
     return server, rank, device
 
-def get_info_for_call_of_duty(offer):
+def get_info_for_call_of_duty(offer,search_query):
     try:
-        server = COD_server_dict[offer['offer']['offerAttributeIdValues'][0]['value']] if offer['offer']['offerAttributeIdValues'][0]['value'] != "Warzone 3" else "N/A"
+        server = COD_server_dict[offer['offer']['offerAttributeIdValues'][0]['value']]
     except(TypeError,KeyError):
         server = "N/A"
-    rank = "Rank Ready"
+    rank = search_query
     try:
         device = offer['offer']['tradeEnvironmentValues'][0]['value']  if offer['offer']['tradeEnvironmentValues'][0]['value'] != "PlayStation" else "PSN"
     except(KeyError,TypeError):
@@ -53,13 +53,13 @@ def get_info_for_call_of_duty(offer):
     return server, rank, device
 
 
-def get_info_for_os(offer):
+def get_info_for_os(offer,search_query):
     server = "Old school"
     rank = ""
     device = ""
     return server, rank, device
 
-def get_info_for_LOL(offer):
+def get_info_for_LOL(offer,search_query):
     try:
         server = LOL_server_dict[offer['offer']['tradeEnvironmentValues'][0]['value']]
     except(KeyError,TypeError):
@@ -71,21 +71,21 @@ def get_info_for_LOL(offer):
     device = ""
     return server, rank, device
 
-def get_info_for_roblox(offer):
+def get_info_for_roblox(offer,search_query):
     server = "Others"
-    rank = ""
+    rank = search_query
     device = ""
     return server, rank, device
 
-def get_info_for_coc(offer):
+def get_info_for_coc(offer,search_query):
     server = ""
     rank = ""
     device = ""
     return server, rank, device
 
-def get_info_for_overwatch(offer):
+def get_info_for_overwatch(offer,search_query):
     server = ""
-    rank = "UnRanked"
+    rank = search_query
     device = ""
     return server, rank, device
 
