@@ -77,7 +77,7 @@ games_dict = {
             "Rank Ready",
         ],
     },
-    "Old": {
+    "OS": {
         "game_id": "10-1",
         "extract_info": get_info_for_os,
         "search_query": "",
