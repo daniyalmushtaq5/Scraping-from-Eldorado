@@ -6,7 +6,7 @@ def get_info_for_valorant(offer,search_query):
     except(KeyError,TypeError):
         server = "N/A"
     try:
-        rank = offer['offer']['offerAttributeIdValues'][0]['value']
+        rank = offer['offer']['offerAttributeIdValues'][0]['value'] if offer['offer']['offerAttributeIdValues'][0]['value'].strip() != "Ranked Ready" else "Rank Ready"
     except(KeyError,TypeError):
         rank = "N/A"
     try:
@@ -43,7 +43,7 @@ def get_info_for_rainbow_six_siege(offer,search_query):
 def get_info_for_call_of_duty(offer,search_query):
     try:
         server = COD_server_dict[offer['offer']['offerAttributeIdValues'][0]['value']]
-    except(TypeError,KeyError):
+    except:
         server = "N/A"
     rank = search_query
     try:
@@ -66,7 +66,7 @@ def get_info_for_LOL(offer,search_query):
         server = "N/A"
     try:
         rank = offer['offer']['offerAttributeIdValues'][0]['value'] if offer['offer']['offerAttributeIdValues'][0]['value'] != "Diamond+" else "Diamond"
-    except(KeyError,TypeError):
+    except:
         rank = "N/A"
     device = ""
     return server, rank, device

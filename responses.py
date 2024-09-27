@@ -53,7 +53,11 @@ def fetch_offers(game_name, page_num=1, count=0, offers_list=None, search_count=
                         game_link = "N/A"
 
                     server, rank, device = games_dict[game_name]['extract_info'](offer,search_query)
-                    if game_name == "Call of Duty" and (server == "Warzone 3" or device not in ['PC', 'PSN', 'Xbox']):
+                    if any(value == "N/A" for value in [server, rank, device]):
+                        continue
+                    
+                    if (game_name in ['Valorant', 'League of Legends'] and rank == "Other") or \
+                    (game_name == "Call of Duty" and (server == "Warzone 3" or device not in ['PC', 'PSN', 'Xbox'])):
                         continue
 
                     table = {
@@ -78,7 +82,7 @@ def fetch_offers(game_name, page_num=1, count=0, offers_list=None, search_count=
             return fetch_offers(game_name, page_num + 1, count, offers_list, search_count)
         else:
             print(f"All pages processed or {ITEMS_PER_GAME} offers scraped")
-            if isinstance(games_dict[game_name]["search_query"], list) and search_count < search_list_len:
+            if isinstance(games_dict[game_name]["search_query"], list) and search_count < search_list_len-1:
                 return fetch_offers(game_name, 1, count, offers_list, search_count + 1)
 
     else:

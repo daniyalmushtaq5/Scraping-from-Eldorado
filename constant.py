@@ -11,9 +11,9 @@ from utils import (
     get_info_for_overwatch,
 )
 
-MIN_PRICE = 5
-MAX_PRICE = 100
-ITEMS_PER_GAME = 100
+MIN_PRICE = 10
+MAX_PRICE = 300
+ITEMS_PER_GAME = 500
 
 games_dict = {
     "Valorant": {
