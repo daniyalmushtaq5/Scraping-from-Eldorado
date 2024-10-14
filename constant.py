@@ -14,12 +14,24 @@ from utils import (
 MIN_PRICE = 10
 MAX_PRICE = 300
 ITEMS_PER_GAME = 500
+RANK_PER_GAME = 50
 
 games_dict = {
     "Valorant": {
         "game_id": "32-1",
         "extract_info": get_info_for_valorant,
-        "search_query": "",
+        "search_query": [
+            "Radiant", 
+            "Immortal", 
+            "Ascendant",
+            "Diamond", 
+            "Platinum",
+            "Gold", 
+            "Silver",
+            "Bronze", 
+            "Iron",
+            "UnRanked"
+        ],
     },
     "FN": {
         "game_id": "16-1",
@@ -85,7 +97,19 @@ games_dict = {
     "League of Legends": {
         "game_id": "17-1",
         "extract_info": get_info_for_LOL,
-        "search_query": "",
+        "search_query": [
+            "Challenger", 
+            "Grandmaster", 
+            "Master", 
+            "Diamond", 
+            "Emerald", 
+            "Platinum", 
+            "Gold", 
+            "Silver", 
+            "Bronze", 
+            "Iron", 
+            "UnRanked"
+        ],
     },
     "RBL": {
         "game_id": "70-1",

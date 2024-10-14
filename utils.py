@@ -6,7 +6,7 @@ def get_info_for_valorant(offer,search_query):
     except(KeyError,TypeError):
         server = "N/A"
     try:
-        rank = offer['offer']['offerAttributeIdValues'][0]['value'] if offer['offer']['offerAttributeIdValues'][0]['value'].strip() != "Ranked Ready" else "Rank Ready"
+        rank = offer['offer']['offerAttributeIdValues'][0]['value'] if offer['offer']['offerAttributeIdValues'][0]['value'].strip() != "Ranked Ready" else "UnRanked"
     except(KeyError,TypeError):
         rank = "N/A"
     try:
@@ -36,7 +36,7 @@ def get_info_for_rainbow_six_siege(offer,search_query):
     rank = search_query
     try:
         device = offer['offer']['tradeEnvironmentValues'][0]['value']  if offer['offer']['tradeEnvironmentValues'][0]['value'] != "PlayStation" else "PSN"
-    except(KeyError,TypeError):
+    except:
         device = "N/A"
     return server, rank, device
 

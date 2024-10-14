@@ -1,14 +1,17 @@
 import requests
 from constant import *
 
-def fetch_offers(game_name, page_num=1, count=0, offers_list=None, search_count=0):
+def fetch_offers(game_name, page_num=1, game_count=0, rank_count=0, offers_list=None, search_count=0):
 
     if offers_list is None:
         offers_list = []
 
     if isinstance(games_dict[game_name]["search_query"], list):
         search_list_len = len(games_dict[game_name]["search_query"])
-        search_query = games_dict[game_name]["search_query"][search_count]
+        try:
+            search_query = games_dict[game_name]["search_query"][search_count]
+        except:
+            return offers_list
     else:
         search_query = games_dict[game_name]["search_query"]
 
@@ -38,11 +41,12 @@ def fetch_offers(game_name, page_num=1, count=0, offers_list=None, search_count=
         data = response.json()
         total_pages = int(data['totalPages'])
 
-        if page_num <= total_pages and count < ITEMS_PER_GAME:
+        if page_num <= total_pages and game_count < ITEMS_PER_GAME:
             for offer in data['results']:
                 feedback_score = float(offer['userOrderInfo']['feedbackScore'])
                 if feedback_score > 99:
                     title = offer['offer'].get('offerTitle', 'N/A')
+                    description = offer['offer'].get('description', 'N/A')
                     try:
                         price = int(offer['offer']['pricePerUnitInUSD']['amount'])
                     except (KeyError, TypeError):
@@ -66,24 +70,32 @@ def fetch_offers(game_name, page_num=1, count=0, offers_list=None, search_count=
                         'Field-2': rank,
                         'Field-3': device,
                         'Title': title,
-                        'DES': title,
+                        'DES': description,
                         'Price': price,
                         'Game Link': game_link,
                         'Done': False
                     }
 
                     offers_list.append(table)
-                    count += 1
+                    game_count += 1
+                    rank_count +=1
 
-                if count >= ITEMS_PER_GAME:
+                if game_count >= ITEMS_PER_GAME:
                     print(f"{ITEMS_PER_GAME} offers are scraped")
                     return offers_list
+                
+                if rank_count >= RANK_PER_GAME and game_name not in ['GTA 5 Online', 'OS', 'Clash of Clans']:
+                    print(f"{RANK_PER_GAME} offers are scraped")
+                    # print(f"Search Count : {search_count}")
+                    return fetch_offers(game_name, 1, game_count, 0, offers_list, search_count+1)
 
-            return fetch_offers(game_name, page_num + 1, count, offers_list, search_count)
+                
+            return fetch_offers(game_name, page_num + 1, game_count, rank_count, offers_list, search_count)
         else:
             print(f"All pages processed or {ITEMS_PER_GAME} offers scraped")
-            if isinstance(games_dict[game_name]["search_query"], list) and search_count < search_list_len-1:
-                return fetch_offers(game_name, 1, count, offers_list, search_count + 1)
+            # print(f"Search Count : {search_count}")
+            if isinstance(games_dict[game_name]["search_query"], list) and search_count < search_list_len - 1:
+                return fetch_offers(game_name, 1, game_count, rank_count, offers_list, search_count+1)
 
     else:
         print(f"Error fetching data. Status code: {response.status_code}")

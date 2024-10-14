@@ -5,6 +5,7 @@ import pandas as pd
 def main():
     all_offers = []
     for game_name in games_dict:
+        print(f"Game name: {game_name}")
         offers = fetch_offers(game_name)
         print(f"Scraped offers for {game_name}:")
         print(offers)
